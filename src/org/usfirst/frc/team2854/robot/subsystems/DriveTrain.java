@@ -1,6 +1,8 @@
 package org.usfirst.frc.team2854.robot.subsystems;
 
+import org.usfirst.frc.team2854.robot.OI;
 import org.usfirst.frc.team2854.robot.RobotMap;
+import org.usfirst.frc.team2854.robot.commands.Drive;
 
 import edu.wpi.first.wpilibj.TalonSRX;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -24,15 +26,13 @@ public class DriveTrain extends Subsystem {
 	}
 	
 	//Methods will be given later***
-	public void forward() {
-		motorFL.set(1);
-		motorFR.set(1);
+	public void drive(double left, double right) {
+		motorFL.set(left);
+		motorBL.set(left);
+		motorFR.set(right);
+		motorBR.set(right);
 	}
 	
-	public void back() {
-		motorFL.set(-1);
-		motorFR.set(-1);
-	}
 	
 	public void stop() {
 		motorFL.set(0);
@@ -46,6 +46,7 @@ public class DriveTrain extends Subsystem {
 	
 	
     public void initDefaultCommand() {
+    	setDefaultCommand(new Drive(OI.OIMap.JoystickId.JOY1, OI.OIMap.Axis.LY, OI.OIMap.Axis.RY));
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
     }
