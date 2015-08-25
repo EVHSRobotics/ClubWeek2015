@@ -1,5 +1,6 @@
 package org.usfirst.frc.team2854.robot.commands;
 
+import org.usfirst.frc.team2854.robot.OI.OIMap;
 import org.usfirst.frc.team2854.robot.Robot;
 import org.usfirst.frc.team2854.robot.RobotMap;
 import org.usfirst.frc.team2854.robot.subsystems.DriveTrain;
@@ -14,6 +15,8 @@ public class Drive extends Command {
 	private int joystickId;
 	private int axisIdL;
 	private int axisIdR;
+	private int axisLT;
+	private int axisRT;
 	
     public Drive(int aJoystickId, int aAxisIdL, int aAxisIdR) {
     	requires(Robot.driveTrain);
@@ -31,7 +34,11 @@ public class Drive extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.driveTrain.drive(Robot.oi.getAxis(joystickId, axisIdL), Robot.oi.getAxis(joystickId, axisIdR));
+    	double t;
+    	double leftAxisYay = Math.abs(Robot.oi.getAxis(joystickId, axisLT));
+    	double rightAxisYay = Math.abs(Robot.oi.getAxis(joystickId, axisRT));
+    	t = Math.max(leftAxisYay, rightAxisYay);
+    	Robot.driveTrain.drive(Robot.oi.getAxis(joystickId, OIMap.Axis.LX), Robot.oi.getAxis(joystickId, OIMap.Axis.LY), t);
     }
 
     // Make this return true when this Command no longer needs to run execute()

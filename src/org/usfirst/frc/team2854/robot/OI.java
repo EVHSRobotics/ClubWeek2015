@@ -103,16 +103,17 @@ public class OI {
 	
 	public boolean isAxisInput(int inputType) {
 		return inputType == OIMap.InputType.AXIS;
-	} 
+	}
 	public boolean isButtonInput(int inputType) {
 		return inputType == OIMap.InputType.BUTTON;
 	}
 	
 	// 2013 numbers (may have changed)
-	// Axis indexes:
-	// 1 - LeftX
-	// 2 - LeftY
-	// 3 - Triggers (Each trigger = 0 to 1, axis value = right - left)
+	// Axis indexes Starts at 0 now; shift -1:
+	// 0 - LeftX
+	// 1 - LeftY
+	// 2 - LeftTriggers (Each trigger = 0 to 1, axis value = right - left)
+	// 3 - RightTriggers (Each trigger = 0 to 1, axis value = right - left)
 	// 4 - RightX
 	// 5 - RightY
 	// 6 - DPad Left/Right

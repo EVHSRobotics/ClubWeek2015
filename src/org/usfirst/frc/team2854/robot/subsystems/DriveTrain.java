@@ -26,11 +26,11 @@ public class DriveTrain extends Subsystem {
 	}
 	
 	//Methods will be given later***
-	public void drive(double left, double right) {
-		motorFL.set(left);
-		motorBL.set(left);
-		motorFR.set(right);
-		motorBR.set(right);
+	public void drive(double x, double y, double t) {
+		motorFL.set(x+y+t);
+		motorBL.set(y-x+t);
+		motorFR.set(y-x-t);
+		motorBR.set(x+y-t);
 	}
 	
 	
