@@ -4,7 +4,7 @@ import org.usfirst.frc.team2854.robot.OI;
 import org.usfirst.frc.team2854.robot.RobotMap;
 import org.usfirst.frc.team2854.robot.commands.Drive;
 
-import edu.wpi.first.wpilibj.TalonSRX;
+import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
@@ -12,17 +12,17 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class DriveTrain extends Subsystem {
 	
-	TalonSRX motorFL;
-	TalonSRX motorFR;
-	TalonSRX motorBR;
-	TalonSRX motorBL;
+	CANTalon motorFL;
+	CANTalon motorFR;
+	CANTalon motorBR;
+	CANTalon motorBL;
 	
 	public DriveTrain(){
 		
-		motorFL = new TalonSRX(RobotMap.MapDriveTrain.motorFL);
-		motorBL = new TalonSRX(RobotMap.MapDriveTrain.motorBL);
-		motorFR = new TalonSRX(RobotMap.MapDriveTrain.motorFR);
-		motorBR = new TalonSRX(RobotMap.MapDriveTrain.motorBR);
+		motorFL = new CANTalon(RobotMap.MapDriveTrain.motorFL);
+		motorBL = new CANTalon(RobotMap.MapDriveTrain.motorBL);
+		motorFR = new CANTalon(RobotMap.MapDriveTrain.motorFR);
+		motorBR = new CANTalon(RobotMap.MapDriveTrain.motorBR);
 	}
 	
 	//Methods will be given later***
@@ -50,5 +50,39 @@ public class DriveTrain extends Subsystem {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
     }
+    
+    
+    public void mecDrive(double x, double y, double t, double a){
+	    double temp = y*Math.cos(Math.toRadians(a)) - x*Math.sin(Math.toRadians(a));
+	    x = y*Math.sin(Math.toRadians(a)) + x*Math.cos(Math.toRadians(a));
+	    y = temp;
+	    if(Math.abs(x+y+t) > 0){
+	        System.out.println("DriveX: " +x + " DriveY: " + y);
+	    }
+	    
+	    double front_left = y + t + x;
+	    double front_right = y - t - x;
+	    double back_left = y + t - x;
+	    double back_right = y - t + x;
+	    
+	    double max = Math.abs(front_left);
+	    if (Math.abs(front_right)>max) {
+	        max = Math.abs(front_right);
+	    }
+	    if (Math.abs(back_left)>max){
+	        max=Math.abs(back_left);
+	    }
+	    if (Math.abs(back_right)>max) {
+	        max=Math.abs(back_right);
+	    }
+	    if (max>1){
+	      front_left/=max; front_right/=max; back_left/=max; back_right/=max;
+
+	    }
+	    motorFL.set(front_left); 
+	    motorFR.set(-front_right);//inverts motor
+	    motorBR.set(-back_right);//inverts motor
+	    motorBL.set(back_left); 
+	}
 }
 

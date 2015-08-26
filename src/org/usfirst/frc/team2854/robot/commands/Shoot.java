@@ -2,21 +2,24 @@ package org.usfirst.frc.team2854.robot.commands;
 
 import org.usfirst.frc.team2854.robot.Robot;
 
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
 public class Shoot extends Command {
-	private int JoystickId;
+	private int joystickId;
 	private int RB;
+	private int XB;
 		
-    public Shoot(int aJoystickId, int aRB) {
+    public Shoot(int aJoystickId, int aRB, int aXB) {
     	requires(Robot.shooter);
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	JoystickId = aJoystickId;
+    	joystickId = aJoystickId;
     	RB = aRB;
+    	XB = aXB;
     }
 
     // Called just before this Command runs the first time
@@ -25,13 +28,14 @@ public class Shoot extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	if (RB == 1){
-    	Robot.shooter.open();
-    	Robot.shooter.stopTrigger();
-    	Robot.shooter.shoot();
-    	Robot.shooter.stopShooter();
-    	Robot.shooter.close();
-    	Robot.shooter.stopTrigger();
+    	if (Robot.oi.getButton(joystickId, XB)){
+    		Robot.shooter.shoot();
+    	}else{
+    		Robot.shooter.stopShooter();
+    	}
+    	
+    	if(Robot.oi.getButton(joystickId, RB)){
+    		Robot.shooter.open();
     	}
     }
 

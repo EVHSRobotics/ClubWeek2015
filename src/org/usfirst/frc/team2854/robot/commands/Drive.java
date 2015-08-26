@@ -35,10 +35,17 @@ public class Drive extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	double t;
-    	double leftAxisYay = Math.abs(Robot.oi.getAxis(joystickId, axisLT));
-    	double rightAxisYay = Math.abs(Robot.oi.getAxis(joystickId, axisRT));
-    	t = Math.max(leftAxisYay, rightAxisYay);
-    	Robot.driveTrain.drive(Robot.oi.getAxis(joystickId, OIMap.Axis.LX), Robot.oi.getAxis(joystickId, OIMap.Axis.LY), t);
+    	double leftAxisYay = (Robot.oi.getAxis(joystickId, axisLT));
+    	double rightAxisYay = (Robot.oi.getAxis(joystickId, axisRT));
+    	
+    	t = Math.max(leftAxisYay, rightAxisYay); //always positive
+    	if(leftAxisYay > rightAxisYay){
+    		t = -leftAxisYay;
+    	}else{
+    		t = rightAxisYay;
+    	}
+    	
+    	Robot.driveTrain.mecDrive(Robot.oi.getAxis(joystickId, OIMap.Axis.LX), Robot.oi.getAxis(joystickId, OIMap.Axis.LY), t, 0);
     }
 
     // Make this return true when this Command no longer needs to run execute()

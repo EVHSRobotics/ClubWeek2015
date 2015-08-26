@@ -24,7 +24,7 @@ public class RobotMap {
 	}
 	
 	public static class MapShooter {
-		public static final int motorShooter = 5;
-		public static final int motorTrigger = 6;
+		public static final int motorShooter = 0;
+		public static final int motorTrigger = 1;
 	}
 }
