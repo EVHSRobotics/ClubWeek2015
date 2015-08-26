@@ -31,6 +31,7 @@ public class Shoot extends Command {
     	Robot.shooter.shoot();
     	Robot.shooter.stopShooter();
     	Robot.shooter.close();
+    	Robot.shooter.stopTrigger();
     	}
     }
 
